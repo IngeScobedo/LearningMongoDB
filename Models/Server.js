@@ -23,8 +23,8 @@ class Server {
     this.routes()
   }
 
-  async dbConnect () {
-    await dbConnection()
+  dbConnect () {
+    dbConnection()
   }
 
   middlewares () {
@@ -49,7 +49,7 @@ class Server {
   }
 
   listen () {
-    this.app.listen(this.PORT, () => {
+    this.server = this.app.listen(this.PORT, () => {
       console.log(`Server is running on port ${this.PORT}`)
     })
   }

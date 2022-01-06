@@ -10,9 +10,14 @@ const createNote = (req = request, res = response) => {
     important,
     state
   })
-  newNote.save().then((savedNote) => {
-    res.status(200).json(savedNote)
-  })
+  newNote
+    .save()
+    .then((savedNote) => {
+      res.status(200).json(savedNote)
+    })
+    .catch((err) => {
+      res.status(400).json({ error: err })
+    })
 }
 
 const deleteNote = async (req = request, res = response) => {
