@@ -10,7 +10,9 @@ class Server {
 
     this.PORT = process.env.PORT
     this.paths = {
-      notes: '/api/notes'
+      notes: '/api/notes/',
+      users: '/api/users/',
+      login: '/api/login/'
     }
 
     // dbConnection
@@ -45,6 +47,8 @@ class Server {
     this.app.use(Sentry.Handlers.requestHandler())
     this.app.use(Sentry.Handlers.tracingHandler())
     this.app.use(this.paths.notes, require('../routes/notes'))
+    this.app.use(this.paths.users, require('../routes/users'))
+    this.app.use(this.paths.login, require('../routes/login'))
     this.app.use(Sentry.Handlers.errorHandler())
   }
 

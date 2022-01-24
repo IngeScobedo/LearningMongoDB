@@ -1,3 +1,4 @@
+const Router = require('express').Router()
 const check = require('express-validator').check
 const inputValidate = require('../middlewares/input-validate')
 const {
@@ -7,8 +8,6 @@ const {
   getNotes,
   getNoteById
 } = require('../controllers/notes')
-
-const Router = require('express').Router()
 
 const router = Router
 
@@ -21,7 +20,11 @@ router.get(
 
 router.post(
   '/',
-  [check('content', 'Content is required').not().isEmpty(), inputValidate],
+  [
+    check('content', 'Content is required').not().isEmpty(),
+    check('userId', 'User is required').isMongoId(),
+    inputValidate
+  ],
   createNote
 )
 

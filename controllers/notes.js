@@ -1,33 +1,34 @@
 const { request, response } = require('express')
 const Note = require('../models/note')
+const User = require('../models/user')
 
-const createNote = (req = request, res = response) => {
-  const { content, important = false, state = true } = req.body
-
+const createNote = async (req = request, res = response) => {
+  const { content, important = false, state = true, userId } = req.body
+  const user = await User.findById(userId)
+  if (!user) {
+    res.status(404).json({
+      message: 'User not found',
+      user,
+      userId
+    })
+  }
   const newNote = new Note({
     content,
     date: new Date(),
     important,
-    state
+    state,
+    user: user._id
   })
-  newNote
-    .save()
-    .then((savedNote) => {
-      res.status(200).json(savedNote)
-    })
-    .catch((err) => {
-      res.status(400).json({ error: err })
-    })
+
+  const savedNote = await newNote.save()
+  user.notes = user.notes.concat(savedNote._id)
+  await user.save()
+  res.status(201).json(savedNote)
 }
 
 const deleteNote = async (req = request, res = response) => {
   const { id } = req.params
   const note = await Note.findByIdAndUpdate(id, { state: false }, { new: true })
-  if (!note) {
-    return res.status(404).json({
-      message: 'Note not found'
-    })
-  }
   res.status(200).json({
     message: 'Note deleted successfully',
     note
@@ -37,39 +38,26 @@ const deleteNote = async (req = request, res = response) => {
 const updateNote = async (req = request, res = response) => {
   const { id } = req.params
   const { content, important } = req.body
-
-  const note = await Note.findById(id)
-
-  if (!note) return res.status(404).json({ message: 'Note not found' })
-
   const updatedNote = await Note.findByIdAndUpdate(
     id,
     { content, important },
     { new: true }
   )
-  res.json(updatedNote)
+  res.status(200).json({ updatedNote })
 }
 
-const getNotes = (req, res) => {
+const getNotes = async (req, res) => {
   const { state = true } = req.query
-  Note.find({ state })
-    .then((notes) => {
-      res.status(200).json(notes)
-    })
-    .catch((err) => {
-      res.status(400).json(err)
-    })
+
+  const notes = await Note.find({ state })
+  res.status(200).json(notes)
 }
 
-const getNoteById = (req = request, res = response) => {
+const getNoteById = async (req = request, res = response) => {
   const { id } = req.params
-  Note.findById(id)
-    .then((note) => {
-      res.json(note)
-    })
-    .catch((err) => {
-      res.json(err)
-    })
+
+  const note = await Note.findById(id)
+  res.status(200).json(note)
 }
 
 module.exports = {

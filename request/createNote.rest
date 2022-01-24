@@ -3,5 +3,6 @@ Content-Type: application/json
 
 {
   "content": "Note #10",
-  "important": 25
+  "important": true,
+  "user": "61ea3a852b8e36dbc325fa37"
 }
