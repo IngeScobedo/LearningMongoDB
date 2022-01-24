@@ -14,6 +14,10 @@ const UserSchema = new Schema({
     required: true
   },
   passwordHash: String,
+  state: {
+    type: Boolean,
+    default: true
+  },
   notes: [
     {
       type: Schema.Types.ObjectId,

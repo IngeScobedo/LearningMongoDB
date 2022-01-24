@@ -1,7 +1,7 @@
 const { request, response } = require('express')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-const User = require('../models/user')
+const User = require('../models/User')
 
 const login = async (req = request, res = response) => {
   const { username, password } = req.body

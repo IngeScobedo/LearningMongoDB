@@ -1,8 +1,8 @@
 POST http://localhost:3000/api/notes/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVlYTNiNWExMTE3ZTU1OWNhNjRlYiIsInVzZXJuYW1lIjoiYWxhbmRldiIsImlhdCI6MTY0MzA0NzQ5OH0.IL-YYlIJlSsjEDjnPcRC5YEuwwDPsCqQxq-aUfZO934
 
 {
-  "content": "Note #10",
-  "important": true,
-  "user": "61ea3a852b8e36dbc325fa37"
+  "content": "New Note with validator Middleware",
+  "important": true
 }
