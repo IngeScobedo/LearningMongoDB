@@ -1,7 +1,8 @@
-PUT http://localhost:3000/api/notes/61d229c9f6a3b88925d33620
+PUT http://localhost:3000/api/notes/PUT_HERE_NOTE_MONGOID
 Content-Type: application/json
 
 {
-  "content": "Note #3 updated :)",
+  "title": "New Title",
+  "content": "Note updated :)",
   "important": false
 }

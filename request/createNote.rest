@@ -1,8 +1,9 @@
 POST http://localhost:3000/api/notes/
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxZWVlYTNiNWExMTE3ZTU1OWNhNjRlYiIsInVzZXJuYW1lIjoiYWxhbmRldiIsImlhdCI6MTY0MzA0NzQ5OH0.IL-YYlIJlSsjEDjnPcRC5YEuwwDPsCqQxq-aUfZO934
+Authorization: Bearer YOUR_TOKEN_HERE
 
 {
-  "content": "New Note with validator Middleware",
+  "title": "My new note",
+  "content": "New Note",
   "important": true
 }

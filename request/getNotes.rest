@@ -1,1 +1,2 @@
-GET http://localhost:3000/api/notes
+GET http://localhost:3001/api/notes
+authorization: YOUR_TOKEN_HERE

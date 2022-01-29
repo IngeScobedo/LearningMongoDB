@@ -1,15 +1,17 @@
 const { request, response } = require('express')
 const Note = require('../models/Note')
+const User = require('../models/User')
 
 const createNote = async (req = request, res = response) => {
-  const { content, important = false, state = true } = req.body
+  const { title, content, important, state = true } = req.body
   const { user } = req
 
-  const note = new Note({ content, important, state, userId: user._id })
+  const note = new Note({ title, content, important, state, userId: user._id })
   const savedNote = await note.save()
   user.notes = user.notes.concat(savedNote._id)
   await user.save()
-  res.status(201).json(savedNote)
+
+  res.status(201).json({ savedNote })
 }
 
 const deleteNote = async (req = request, res = response) => {
@@ -33,9 +35,8 @@ const updateNote = async (req = request, res = response) => {
 }
 
 const getNotes = async (req, res) => {
-  const { state = true } = req.query
+  const { notes } = req.user
 
-  const notes = await Note.find({ state })
   res.status(200).json(notes)
 }
 

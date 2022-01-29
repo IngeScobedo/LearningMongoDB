@@ -1,6 +1,6 @@
 const Router = require('express').Router()
 const check = require('express-validator').check
-const { inputValidate, validatorJWT } = require('../middlewares')
+const { inputValidate, validatorJWT, validateGetNotes } = require('../middlewares')
 const {
   createNote,
   deleteNote,
@@ -11,7 +11,9 @@ const {
 
 const router = Router
 
-router.get('/', getNotes)
+router.get('/', [
+  validateGetNotes
+], getNotes)
 router.get(
   '/:id',
   [check('id', 'Invalid ID').isMongoId(), inputValidate],
@@ -22,7 +24,9 @@ router.post(
   '/',
   [
     validatorJWT,
-    check('content', 'Content is required').not().isEmpty(),
+    check('content', 'Content is required').not().isEmpty().isString(),
+    check('title', 'Title of note is required').not().isEmpty().isString(),
+    check('important', 'Important is required').not().isEmpty().isBoolean(),
     inputValidate
   ],
   createNote
@@ -31,8 +35,11 @@ router.post(
 router.put(
   '/:id',
   [
+    // TODO: add validator for ID
     check('id', 'Invalid ID').isMongoId(),
+    // TODO: add validator for TITLE
     check('content', 'Content is required').not().isEmpty(),
+    // TODO: add validator for IMPORTANT
     inputValidate
   ],
   updateNote
