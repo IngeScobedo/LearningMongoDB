@@ -12,6 +12,7 @@ class Server {
     this.paths = {
       notes: '/api/notes/',
       users: '/api/users/',
+      walletUsers: '/api/walletusers',
       login: '/api/login/'
     }
 
@@ -48,6 +49,7 @@ class Server {
     this.app.use(Sentry.Handlers.tracingHandler())
     this.app.use(this.paths.notes, require('../routes/notes'))
     this.app.use(this.paths.users, require('../routes/users'))
+    this.app.use(this.paths.walletUsers, require('../routes/walletUsers'))
     this.app.use(this.paths.login, require('../routes/login'))
     this.app.use(Sentry.Handlers.errorHandler())
   }
