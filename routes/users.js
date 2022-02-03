@@ -7,15 +7,11 @@ const { isValidUsername, isValidEmail } = require('../helpers/db-validators')
 const router = Router
 
 const {
-  getAllUsers,
-  getUserById,
-  createUser,
-  updateUser,
-  deleteUser
+  createUser
 } = require('../controllers/users')
 
-router.get('/', getAllUsers)
-router.get('/:id', getUserById)
+// router.get('/', getAllUsers)
+// router.get('/:id', getUserById)
 
 router.post(
   '/',

@@ -14,9 +14,14 @@ const router = Router
 router.get('/', [
   validateGetNotes
 ], getNotes)
+
 router.get(
   '/:id',
-  [check('id', 'Invalid ID').isMongoId(), inputValidate],
+  [
+    validateGetNotes,
+    check('id', 'Invalid ID').isMongoId(),
+    inputValidate
+  ],
   getNoteById
 )
 

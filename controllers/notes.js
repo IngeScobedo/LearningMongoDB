@@ -1,12 +1,13 @@
 const { request, response } = require('express')
 const Note = require('../models/Note')
-const User = require('../models/User')
 
 const createNote = async (req = request, res = response) => {
   const { title, content, important, state = true } = req.body
   const { user } = req
 
-  const note = new Note({ title, content, important, state, userId: user._id })
+  console.log(user)
+
+  const note = new Note({ title, content, important, state, userId: user.id })
   const savedNote = await note.save()
   user.notes = user.notes.concat(savedNote._id)
   await user.save()
@@ -41,9 +42,11 @@ const getNotes = async (req, res) => {
 }
 
 const getNoteById = async (req = request, res = response) => {
+  const { user } = req
+  const { notes } = user
   const { id } = req.params
 
-  const note = await Note.findById(id)
+  const note = notes.find(note => note.id === id)
   res.status(200).json(note)
 }
 

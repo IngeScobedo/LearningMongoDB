@@ -1,0 +1,4 @@
+GET http://localhost:3001/api/walletNotes/
+Content-Type: application/json; charset=
+Authorization: 0xa2A42De2389a9e295Cc2cC9b544de5142DED36ef
+
